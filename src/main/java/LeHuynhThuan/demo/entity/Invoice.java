@@ -25,5 +25,6 @@ public class Invoice {
     private List<ItemInvoice> items = new ArrayList<>();
     private double totalAmount;
     private LocalDateTime orderDate = LocalDateTime.now();
-    private String status = "PENDING";
+    private LocalDateTime updatedAt = LocalDateTime.now();
+    private OrderStatus status = OrderStatus.PENDING;
 }

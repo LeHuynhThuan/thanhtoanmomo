@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{layout :: head}"></head>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="vi">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm sách</title>
+</head>
 <body>
 <nav th:replace="~{layout :: header}"></nav>
 
@@ -15,24 +20,24 @@
                 <div class="card-body p-4">
                     <form th:action="@{/books/add}" th:object="${book}" method="post">
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Tiêu đề sách <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" th:field="*{title}" required>
+                            <label for="title" class="form-label fw-bold">Tiêu đề sách <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="title" th:field="*{title}" required>
                             <div class="text-danger small" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Tác giả <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" th:field="*{author}" required>
+                            <label for="author" class="form-label fw-bold">Tác giả <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="author" th:field="*{author}" required>
                             <div class="text-danger small" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Giá (VND) <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" th:field="*{price}" required min="1">
+                                <label for="price" class="form-label fw-bold">Giá (VND) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="price" th:field="*{price}" required min="1">
                                 <div class="text-danger small" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Danh mục <span class="text-danger">*</span></label>
-                                <select class="form-select" th:field="*{categoryId}" required>
+                                <label for="categoryId" class="form-label fw-bold">Danh mục <span class="text-danger">*</span></label>
+                                <select class="form-select" id="categoryId" th:field="*{categoryId}" required>
                                     <option value="">-- Chọn danh mục --</option>
                                     <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}">Category</option>
                                 </select>
@@ -40,12 +45,12 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Hình ảnh URL</label>
-                            <input type="url" class="form-control" th:field="*{image}" placeholder="https://...">
+                            <label for="image" class="form-label fw-bold">Hình ảnh URL</label>
+                            <input type="url" class="form-control" id="image" th:field="*{image}" placeholder="https://...">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Mô tả</label>
-                            <textarea class="form-control" th:field="*{description}" rows="4"></textarea>
+                            <label for="description" class="form-label fw-bold">Mô tả</label>
+                            <textarea class="form-control" id="description" th:field="*{description}" rows="4"></textarea>
                         </div>
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-success">

@@ -11,6 +11,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +31,11 @@ public class Book {
     @Positive(message = "Giá phải là số dương")
     private double price;
 
-    private String image;
+    private String image; // Base64 encoded image data
+
+    private String imageFileName; // Original filename
+
+    private LocalDateTime uploadedDate; // When image was uploaded
 
     @Size(max = 1000, message = "Mô tả tối đa 1000 ký tự")
     private String description;
@@ -40,3 +46,4 @@ public class Book {
     @Transient
     private Category category;
 }
+

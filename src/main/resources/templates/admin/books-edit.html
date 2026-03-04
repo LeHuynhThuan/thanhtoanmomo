@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="vi"
+      th:with="pageTitle='Sửa Sách'">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa Sách</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<nav th:replace="~{layout :: header}"></nav>
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+
+<!-- Admin Navigation -->
+<div class="bg-light border-bottom">
+    <div class="container py-2">
+        <div class="btn-group" role="group">
+            <a th:href="@{/admin}" class="btn btn-sm btn-outline-primary">Dashboard</a>
+            <a th:href="@{/admin/books}" class="btn btn-sm btn-primary active">Quản lý Sách</a>
+            <a th:href="@{/admin/categories}" class="btn btn-sm btn-outline-primary">Quản lý Thể Loại</a>
+            <a th:href="@{/admin/orders}" class="btn btn-sm btn-outline-primary">Lịch sử Bán Hàng</a>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-light">
+                    <h4 class="mb-0">Sửa Thông Tin Sách</h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/admin/books/edit/{id}(id=*{id})}" method="post" enctype="multipart/form-data" th:object="${book}">
+                        <input type="hidden" id="csrfToken" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" th:data-header="${_csrf.headerName}">
+                        
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Tiêu Đề <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="*{title}" placeholder="Nhập tiêu đề" title="Tiêu đề sách" required>
+                            <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Tác Giả <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="*{author}" placeholder="Nhập tác giả" title="Tác giả sách" required>
+                            <small class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Giá <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{price}" placeholder="Nhập giá" title="Giá sách" required>
+                            <small class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="categoryId" class="form-label">Thể Loại <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select class="form-select" th:field="*{categoryId}" title="Chọn thể loại sách" required>
+                                    <option value="" disabled th:selected="${#strings.isEmpty(book.categoryId)}">Chọn thể loại</option>
+                                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"
+                                            ></option>
+                                </select>
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal" title="Thêm thể loại mới">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+                            <small class="text-danger" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ảnh Hiện Tại</label>
+                            <div th:if="${book.image}" class="mb-2">
+                                <img th:src="${book.image}" class="admin-book-current-img rounded border"
+                                     th:alt="${book.title}" th:title="${book.title}">
+                            </div>
+                            <div th:unless="${book.image}" class="alert alert-info">
+                                Sách này chưa có ảnh
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="imageFile" class="form-label">Cập Nhật Ảnh</label>
+                            <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/png,image/jpeg,image/jpg" title="Tải lên ảnh mới">
+                            <small class="text-muted">PNG, JPG, JPEG, tối đa 5MB. Bỏ trống nếu không muốn thay đổi</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô Tả</label>
+                            <textarea class="form-control" th:field="*{description}" rows="4" placeholder="Nhập mô tả sách" title="Mô tả chi tiết"></textarea>
+                            <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary" title="Lưu thay đổi sách">
+                                <i class="bi bi-check-circle me-2"></i>Lưu Thay Đổi
+                            </button>
+                            <a th:href="@{/admin/books}" class="btn btn-secondary" title="Quay lại danh sách sách">
+                                <i class="bi bi-arrow-left me-2"></i>Quay Lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm Thể Loại Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="categoryName" class="form-label">Tên Thể Loại <span class="text-danger">*</span></label>
+                    <input type="text" id="categoryName" class="form-control" placeholder="Nhập tên thể loại" required>
+                    <small id="categoryError" class="text-danger d-none"></small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" title="Đóng cửa sổ">Đóng</button>
+                <button type="button" class="btn btn-primary" id="addCategoryBtn" title="Thêm thể loại mới">Thêm Thể Loại</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('addCategoryBtn').addEventListener('click', function() {
+    const name = document.getElementById('categoryName').value.trim();
+    const errorEl = document.getElementById('categoryError');
+    const csrfEl = document.getElementById('csrfToken');
+    const csrfToken = csrfEl ? csrfEl.value : null;
+    const csrfHeader = csrfEl ? csrfEl.dataset.header : null;
+    
+    if (!name) {
+        errorEl.textContent = 'Vui lòng nhập tên thể loại';
+        errorEl.classList.remove('d-none');
+        return;
+    }
+    
+    const headers = {};
+    if (csrfToken && csrfHeader) {
+        headers[csrfHeader] = csrfToken;
+    }
+    
+    fetch('/admin/categories/add-modal?name=' + encodeURIComponent(name), {
+        method: 'POST',
+        headers
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        if (data.success) {
+            const select = document.getElementById('categoryId');
+            const option = document.createElement('option');
+            option.value = data.id;
+            option.textContent = data.name;
+            option.selected = true;
+            select.appendChild(option);
+            
+            document.getElementById('categoryName').value = '';
+            errorEl.classList.add('d-none');
+            bootstrap.Modal.getInstance(document.getElementById('addCategoryModal')).hide();
+        } else {
+            errorEl.textContent = data.message;
+            errorEl.classList.remove('d-none');
+        }
+    })
+    .catch(err => {
+        errorEl.textContent = 'Lỗi khi thêm thể loại';
+        errorEl.classList.remove('d-none');
+    });
+});
+</script>
+</body>
+</html>

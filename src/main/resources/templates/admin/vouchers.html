@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="vi">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Voucher</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<nav th:replace="~{layout :: header}"></nav>
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+
+<!-- Admin Navigation -->
+<div class="bg-light border-bottom">
+    <div class="container py-2">
+        <div class="btn-group" role="group">
+            <a th:href="@{/admin}" class="btn btn-sm btn-outline-primary">Dashboard</a>
+            <a th:href="@{/admin/books}" class="btn btn-sm btn-outline-primary">Quản lý Sách</a>
+            <a th:href="@{/admin/categories}" class="btn btn-sm btn-outline-primary">Quản lý Thể Loại</a>
+            <a th:href="@{/admin/orders}" class="btn btn-sm btn-outline-primary">Lịch sử Bán Hàng</a>
+            <a th:href="@{/admin/vouchers}" class="btn btn-sm btn-primary active">Quản lý Voucher</a>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="font-serif fw-bold mb-0">Quản Lý Voucher</h1>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3">Danh Sách Voucher</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Mã</th>
+                                <th>Loại</th>
+                                <th>Giá trị</th>
+                                <th>Đơn tối thiểu</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="v : ${vouchers}">
+                                <td><code th:text="${v.code}">CODE</code></td>
+                                <td th:text="${v.discountType == T(LeHuynhThuan.demo.entity.Voucher.DiscountType).PERCENT ? 'Phần trăm' : 'Số tiền'}">Loại</td>
+                                <td th:text="${v.discountType == T(LeHuynhThuan.demo.entity.Voucher.DiscountType).PERCENT ? v.discountValue + ' %' : #numbers.formatDecimal(v.discountValue,0,'COMMA',0,'POINT') + ' VND'}">0</td>
+                                <td th:text="${#numbers.formatDecimal(v.minOrderAmount,0,'COMMA',0,'POINT')} + ' VND'">0</td>
+                                <td>
+                                    <small th:text="${v.startAt != null ? #temporals.format(v.startAt,'dd/MM/yyyy') : '-'}">-</small>
+                                    -
+                                    <small th:text="${v.endAt != null ? #temporals.format(v.endAt,'dd/MM/yyyy') : '-'}">-</small>
+                                </td>
+                                <td>
+                                    <span class="badge" th:classappend="${v.active} ? 'bg-success' : 'bg-secondary'"
+                                          th:text="${v.active} ? 'Đang dùng' : 'Ngừng'">Trạng thái</span>
+                                </td>
+                                <td class="text-end">
+                                    <a th:href="@{/admin/vouchers/edit/{id}(id=${v.id})}" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a th:href="@{/admin/vouchers/delete/{id}(id=${v.id})}" class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Xóa voucher này?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(vouchers)}">
+                                <td colspan="7" class="text-center text-muted py-4">Chưa có voucher nào</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3" th:text="${voucher.id == null} ? 'Thêm Voucher Mới' : 'Sửa Voucher'">Thêm Voucher</h5>
+                    <form th:action="@{/admin/vouchers/save}" th:object="${voucher}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        <div class="mb-3">
+                            <label class="form-label">Mã Voucher <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="*{code}" placeholder="VD: SALE10" required>
+                            <small class="text-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" th:field="*{description}" rows="2"
+                                      placeholder="Mô tả ngắn về voucher"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Loại giảm giá <span class="text-danger">*</span></label>
+                            <select class="form-select" th:field="*{discountType}" required>
+                                <option th:value="${T(LeHuynhThuan.demo.entity.Voucher.DiscountType).PERCENT}">Phần trăm (%)</option>
+                                <option th:value="${T(LeHuynhThuan.demo.entity.Voucher.DiscountType).FIXED}">Số tiền (VND)</option>
+                            </select>
+                            <small class="text-danger" th:if="${#fields.hasErrors('discountType')}" th:errors="*{discountType}"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Giá trị giảm <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{discountValue}" required>
+                            <small class="text-danger" th:if="${#fields.hasErrors('discountValue')}" th:errors="*{discountValue}"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Đơn tối thiểu</label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{minOrderAmount}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Thời gian áp dụng</label>
+                            <div class="row g-2">
+                                <div class="col">
+                                    <input type="datetime-local" class="form-control" th:field="*{startAt}">
+                                </div>
+                                <div class="col">
+                                    <input type="datetime-local" class="form-control" th:field="*{endAt}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" th:field="*{active}" id="activeCheck">
+                            <label class="form-check-label" for="activeCheck">
+                                Đang kích hoạt
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i>
+                            <span th:text="${voucher.id == null} ? 'Lưu Voucher' : 'Cập nhật'">Lưu Voucher</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

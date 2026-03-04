@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout :: head}"></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+</head>
 <body>
 <nav th:replace="~{layout :: header}"></nav>
 
@@ -24,28 +28,28 @@
 
                     <form th:action="@{/auth/register}" th:object="${user}" method="post">
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Tên đăng nhập <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" th:field="*{username}" required minlength="3">
+                            <label for="username" class="form-label fw-bold">Tên đăng nhập <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" th:field="*{username}" required minlength="3">
                             <div class="text-danger small" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Mật khẩu <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" th:field="*{password}" required minlength="6">
+                            <label for="password" class="form-label fw-bold">Mật khẩu <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" required minlength="6">
                             <div class="text-danger small" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Họ và tên <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" th:field="*{fullName}" required>
+                            <label for="fullName" class="form-label fw-bold">Họ và tên <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="fullName" th:field="*{fullName}" required>
                             <div class="text-danger small" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" th:field="*{email}" required>
+                            <label for="email" class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" required>
                             <div class="text-danger small" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Điện thoại</label>
-                            <input type="tel" class="form-control" th:field="*{phone}">
+                            <label for="phone" class="form-label fw-bold">Điện thoại</label>
+                            <input type="tel" class="form-control" id="phone" th:field="*{phone}">
                         </div>
                         <button type="submit" class="btn btn-success w-100">
                             <i class="bi bi-person-plus"></i> Đăng ký

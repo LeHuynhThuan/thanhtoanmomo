@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{layout :: head}"></head>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="vi">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+</head>
 <body>
 <nav th:replace="~{layout :: header}"></nav>
 
@@ -40,8 +45,9 @@
                             <td th:text="${#numbers.formatDecimal(item.book.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">0 VND</td>
                             <td>
                                 <form th:action="@{/cart/update/{id}(id=${item.book.id})}" method="post" class="d-flex gap-1">
-                                    <input type="number" name="quantity" th:value="${item.quantity}" min="1" max="99" class="form-control" style="width: 70px;">
-                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                    <input type="number" name="quantity" th:value="${item.quantity}" min="1" max="99" class="form-control" style="width: 70px;"
+                                           aria-label="Số lượng" title="Số lượng">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary" title="Cập nhật số lượng" aria-label="Cập nhật số lượng">
                                         <i class="bi bi-arrow-repeat"></i>
                                     </button>
                                 </form>

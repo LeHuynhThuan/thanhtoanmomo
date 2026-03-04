@@ -134,12 +134,18 @@
                 <li class="nav-item">
                     <a class="nav-link fw-medium" th:href="@{/contact}">Liên hệ</a>
                 </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link fw-bold text-accent" th:href="@{/admin}">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
             </ul>
             
             <!-- Search -->
             <form th:action="@{/books/search}" method="get" class="d-flex me-3">
                 <div class="input-group">
-                    <input type="text" class="form-control border-end-0" name="keyword" placeholder="Tìm kiếm sách...">
+                    <label for="navbarKeyword" class="visually-hidden">Tìm kiếm sách</label>
+                    <input type="text" class="form-control border-end-0" id="navbarKeyword" name="keyword" placeholder="Tìm kiếm sách...">
                     <button class="btn btn-outline-secondary" type="submit" title="Search books">
                         <i class="bi bi-search"></i>
                     </button>
@@ -166,8 +172,13 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li sec:authorize="hasRole('ADMIN')">
-                            <a class="dropdown-item" th:href="@{/books/add}">
-                                <i class="bi bi-plus-circle"></i> Thêm sách
+                            <a class="dropdown-item" th:href="@{/admin}">
+                                <i class="bi bi-speedometer2"></i> Dashboard Admin
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('USER')">
+                            <a class="dropdown-item" th:href="@{/orders}">
+                                <i class="bi bi-receipt"></i> Đơn hàng của tôi
                             </a>
                         </li>
                         <li>

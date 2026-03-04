@@ -1,0 +1,65 @@
+/* Admin Dashboard Styles */
+
+/* Books List */
+.admin-books-img {
+    width: 40px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Book Edit */
+.admin-book-current-img {
+    max-width: 200px;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+/* Categories */
+.admin-table-stt {
+    width: 50px;
+}
+
+.admin-table-actions {
+    width: 150px;
+}
+
+/* Orders */
+.status-badge {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+}
+
+.status-pending {
+    background-color: #ffc107;
+}
+
+.status-processing {
+    background-color: #17a2b8;
+}
+
+.status-shipped {
+    background-color: #0d6efd;
+}
+
+.status-delivered {
+    background-color: #198754;
+}
+
+.status-completed {
+    background-color: #6f42c1;
+}
+
+.status-cancelled {
+    background-color: #dc3545;
+}
+
+/* Order Details */
+.order-detail-status-badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.status-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

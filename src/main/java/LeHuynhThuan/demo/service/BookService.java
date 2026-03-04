@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +47,29 @@ public class BookService {
         List<Book> books = bookRepository.findByCategoryId(categoryId);
         books.forEach(this::populateCategory);
         return books;
+    }
+
+    public void clearCategoryForBooks(String categoryId) {
+        List<Book> books = bookRepository.findByCategoryId(categoryId);
+        for (Book book : books) {
+            book.setCategoryId(null);
+            // category will be repopulated as null
+            bookRepository.save(book);
+        }
+    }
+
+    public long countByCategory(String categoryId) {
+        return bookRepository.findByCategoryId(categoryId).size();
+    }
+
+    public List<Book> getTopSellingBooks(int limit) {
+        // For now, return the first N books
+        // In a production app, you'd query from InvoiceItems to find highest sold books
+        List<Book> books = bookRepository.findAll();
+        books.forEach(this::populateCategory);
+        return books.stream()
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 
     private void populateCategory(Book book) {

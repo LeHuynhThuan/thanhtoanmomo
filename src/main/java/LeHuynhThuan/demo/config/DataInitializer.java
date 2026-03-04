@@ -44,16 +44,95 @@ public class DataInitializer {
 
                 // Khoi tao Books mau
                 if (bookRepository.count() == 0) {
-                    bookRepository.save(new Book(null, "Lap trinh Java", "Nguyen Van A", 150000, "https://via.placeholder.com/200x280?text=Java", "Sach hoc lap trinh Java co ban den nang cao", cat1.getId(), null));
-                    bookRepository.save(new Book(null, "Spring Boot in Action", "Craig Walls", 250000, "https://via.placeholder.com/200x280?text=Spring+Boot", "Huong dan xay dung ung dung voi Spring Boot", cat1.getId(), null));
-                    bookRepository.save(new Book(null, "Python cho nguoi moi", "Tran Van B", 120000, "https://via.placeholder.com/200x280?text=Python", "Nhap mon lap trinh Python", cat1.getId(), null));
-                    bookRepository.save(new Book(null, "Kinh te hoc vi mo", "Le Van C", 180000, "https://via.placeholder.com/200x280?text=Kinh+Te", "Giao trinh kinh te hoc vi mo", cat2.getId(), null));
-                    bookRepository.save(new Book(null, "Marketing can ban", "Pham Thi D", 135000, "https://via.placeholder.com/200x280?text=Marketing", "Nguyen ly Marketing hien dai", cat2.getId(), null));
-                    bookRepository.save(new Book(null, "Truyen Kieu", "Nguyen Du", 85000, "https://via.placeholder.com/200x280?text=Truyen+Kieu", "Tac pham van hoc tien Viet Nam", cat3.getId(), null));
-                    bookRepository.save(new Book(null, "So Do", "Vu Trong Phung", 95000, "https://via.placeholder.com/200x280?text=So+Do", "Tieu thuyet trao phung noi tieng", cat3.getId(), null));
-                    bookRepository.save(new Book(null, "Vat ly dai cuong", "Hoang Van E", 160000, "https://via.placeholder.com/200x280?text=Vat+Ly", "Giao trinh vat ly dai cuong", cat4.getId(), null));
-                    bookRepository.save(new Book(null, "TOEIC 990", "Kim Tae Hee", 200000, "https://via.placeholder.com/200x280?text=TOEIC", "Luyen thi TOEIC dat diem cao", cat5.getId(), null));
-                    bookRepository.save(new Book(null, "IELTS Academic", "Simon", 220000, "https://via.placeholder.com/200x280?text=IELTS", "Chinh phuc IELTS Academic", cat5.getId(), null));
+                    Book book1 = new Book();
+                    book1.setTitle("Lap trinh Java");
+                    book1.setAuthor("Nguyen Van A");
+                    book1.setPrice(150000);
+                    book1.setImage("https://via.placeholder.com/200x280?text=Java");
+                    book1.setDescription("Sach hoc lap trinh Java co ban den nang cao");
+                    book1.setCategoryId(cat1.getId());
+                    bookRepository.save(book1);
+
+                    Book book2 = new Book();
+                    book2.setTitle("Spring Boot in Action");
+                    book2.setAuthor("Craig Walls");
+                    book2.setPrice(250000);
+                    book2.setImage("https://via.placeholder.com/200x280?text=Spring+Boot");
+                    book2.setDescription("Huong dan xay dung ung dung voi Spring Boot");
+                    book2.setCategoryId(cat1.getId());
+                    bookRepository.save(book2);
+
+                    Book book3 = new Book();
+                    book3.setTitle("Python cho nguoi moi");
+                    book3.setAuthor("Tran Van B");
+                    book3.setPrice(120000);
+                    book3.setImage("https://via.placeholder.com/200x280?text=Python");
+                    book3.setDescription("Nhap mon lap trinh Python");
+                    book3.setCategoryId(cat1.getId());
+                    bookRepository.save(book3);
+
+                    Book book4 = new Book();
+                    book4.setTitle("Kinh te hoc vi mo");
+                    book4.setAuthor("Le Van C");
+                    book4.setPrice(180000);
+                    book4.setImage("https://via.placeholder.com/200x280?text=Kinh+Te");
+                    book4.setDescription("Giao trinh kinh te hoc vi mo");
+                    book4.setCategoryId(cat2.getId());
+                    bookRepository.save(book4);
+
+                    Book book5 = new Book();
+                    book5.setTitle("Marketing can ban");
+                    book5.setAuthor("Pham Thi D");
+                    book5.setPrice(135000);
+                    book5.setImage("https://via.placeholder.com/200x280?text=Marketing");
+                    book5.setDescription("Nguyen ly Marketing hien dai");
+                    book5.setCategoryId(cat2.getId());
+                    bookRepository.save(book5);
+
+                    Book book6 = new Book();
+                    book6.setTitle("Truyen Kieu");
+                    book6.setAuthor("Nguyen Du");
+                    book6.setPrice(85000);
+                    book6.setImage("https://via.placeholder.com/200x280?text=Truyen+Kieu");
+                    book6.setDescription("Tac pham van hoc tien Viet Nam");
+                    book6.setCategoryId(cat3.getId());
+                    bookRepository.save(book6);
+
+                    Book book7 = new Book();
+                    book7.setTitle("So Do");
+                    book7.setAuthor("Vu Trong Phung");
+                    book7.setPrice(95000);
+                    book7.setImage("https://via.placeholder.com/200x280?text=So+Do");
+                    book7.setDescription("Tieu thuyet trao phung noi tieng");
+                    book7.setCategoryId(cat3.getId());
+                    bookRepository.save(book7);
+
+                    Book book8 = new Book();
+                    book8.setTitle("Vat ly dai cuong");
+                    book8.setAuthor("Hoang Van E");
+                    book8.setPrice(160000);
+                    book8.setImage("https://via.placeholder.com/200x280?text=Vat+Ly");
+                    book8.setDescription("Giao trinh vat ly dai cuong");
+                    book8.setCategoryId(cat4.getId());
+                    bookRepository.save(book8);
+
+                    Book book9 = new Book();
+                    book9.setTitle("TOEIC 990");
+                    book9.setAuthor("Kim Tae Hee");
+                    book9.setPrice(200000);
+                    book9.setImage("https://via.placeholder.com/200x280?text=TOEIC");
+                    book9.setDescription("Luyen thi TOEIC dat diem cao");
+                    book9.setCategoryId(cat5.getId());
+                    bookRepository.save(book9);
+
+                    Book book10 = new Book();
+                    book10.setTitle("IELTS Academic");
+                    book10.setAuthor("Simon");
+                    book10.setPrice(220000);
+                    book10.setImage("https://via.placeholder.com/200x280?text=IELTS");
+                    book10.setDescription("Chinh phuc IELTS Academic");
+                    book10.setCategoryId(cat5.getId());
+                    bookRepository.save(book10);
                 }
             }
 

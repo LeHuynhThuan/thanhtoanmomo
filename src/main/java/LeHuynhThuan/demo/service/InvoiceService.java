@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +32,8 @@ public class InvoiceService {
         invoice.setItems(itemInvoices);
         invoice.setTotalAmount(cart.getTotal());
         invoice.setOrderDate(LocalDateTime.now());
-        invoice.setStatus("PENDING");
+        invoice.setUpdatedAt(LocalDateTime.now());
+        invoice.setStatus(OrderStatus.PENDING);
         return invoiceRepository.save(invoice);
     }
 
@@ -41,5 +43,14 @@ public class InvoiceService {
 
     public List<Invoice> getAllInvoices() {
         return invoiceRepository.findAll();
+    }
+
+    public Optional<Invoice> getInvoiceById(String id) {
+        return invoiceRepository.findById(id);
+    }
+
+    public Invoice saveInvoice(Invoice invoice) {
+        invoice.setUpdatedAt(LocalDateTime.now());
+        return invoiceRepository.save(invoice);
     }
 }

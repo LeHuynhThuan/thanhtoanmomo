@@ -22,6 +22,11 @@ public class CheckoutController {
 
     @GetMapping
     public String checkoutForm(Model model, @AuthenticationPrincipal User user) {
+        // Prevent admin from accessing checkout
+        if (user.getRoles().contains("ADMIN")) {
+            return "redirect:/admin";
+        }
+        
         if (cartService.getCart().getItems().isEmpty()) {
             return "redirect:/cart";
         }
@@ -38,6 +43,11 @@ public class CheckoutController {
                                    @RequestParam String customerAddress,
                                    @AuthenticationPrincipal User user,
                                    Model model) {
+        // Prevent admin from processing checkout
+        if (user.getRoles().contains("ADMIN")) {
+            return "redirect:/admin";
+        }
+        
         Invoice invoice = new Invoice();
         invoice.setCustomerName(customerName);
         invoice.setCustomerEmail(customerEmail);

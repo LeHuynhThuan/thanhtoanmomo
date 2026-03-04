@@ -1,6 +1,5 @@
 package LeHuynhThuan.demo.controller;
 
-import LeHuynhThuan.demo.entity.Book;
 import LeHuynhThuan.demo.service.BookService;
 import LeHuynhThuan.demo.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +16,10 @@ public class CartController {
 
     @GetMapping
     public String viewCart(Model model) {
+        // Remove items whose books have been deleted
+        cartService.getCart().getItems()
+                .removeIf(item -> bookService.getBookById(item.getBook().getId()).isEmpty());
+
         model.addAttribute("cart", cartService.getCart());
         model.addAttribute("total", cartService.getTotal());
         return "cart/cart";
