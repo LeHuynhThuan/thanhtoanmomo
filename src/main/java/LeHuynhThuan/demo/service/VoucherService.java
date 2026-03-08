@@ -16,6 +16,11 @@ public class VoucherService {
     private final IVoucherRepository voucherRepository;
 
     public List<Voucher> getAll() {
+        // Dọn dữ liệu lỗi: xóa các voucher không có id (do bug cũ sinh ra)
+        voucherRepository.findAll().stream()
+                .filter(v -> v.getId() == null || v.getId().trim().isEmpty())
+                .forEach(voucherRepository::delete);
+
         return voucherRepository.findAll();
     }
 
@@ -24,8 +29,13 @@ public class VoucherService {
     }
 
     public Voucher save(Voucher voucher) {
-        // Normalize code
+        // Chuẩn hóa mã code
         voucher.setCode(voucher.getCode().trim().toUpperCase());
+
+        // Nếu id rỗng ("") thì coi như null để Mongo tự sinh id mới
+        if (voucher.getId() != null && voucher.getId().trim().isEmpty()) {
+            voucher.setId(null);
+        }
 
         // Validate date range
         if (voucher.getStartAt() != null && voucher.getEndAt() != null &&
@@ -67,7 +77,10 @@ public class VoucherService {
                 .filter(Voucher::isActive)
                 .filter(v -> v.getStartAt() == null || !v.getStartAt().isAfter(LocalDateTime.now()))
                 .filter(v -> v.getEndAt() == null || !v.getEndAt().isBefore(LocalDateTime.now()))
-                .filter(v -> orderTotal >= v.getMinOrderAmount());
+                .filter(v -> orderTotal >= v.getMinOrderAmount())
+                // Nếu remainingQuantity = null thì xem như không giới hạn,
+                // ngược lại chỉ chấp nhận voucher còn số lượng > 0
+                .filter(v -> v.getRemainingQuantity() == null || v.getRemainingQuantity() > 0);
     }
 
     public double calculateDiscount(Voucher voucher, double orderTotal) {

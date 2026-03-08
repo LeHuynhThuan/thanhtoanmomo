@@ -44,5 +44,11 @@ public class Voucher {
     private LocalDateTime endAt;
 
     private boolean active = true;
+
+    /**
+     * Số lượng voucher còn lại.
+     * null nghĩa là không giới hạn số lần sử dụng.
+     */
+    private Integer remainingQuantity;
 }
 

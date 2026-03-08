@@ -40,8 +40,11 @@ public class OrderController {
             return "redirect:/auth/login";
         }
 
+        // Admin có thể xem chi tiết mọi đơn hàng
+        boolean isAdmin = user.getRoles() != null && user.getRoles().contains("ADMIN");
+
         return invoiceService.getInvoiceById(id)
-                .filter(inv -> user.getId().equals(inv.getUserId()))
+                .filter(inv -> isAdmin || user.getId().equals(inv.getUserId()))
                 .map(inv -> {
                     model.addAttribute("order", inv);
                     model.addAttribute("OrderStatus", OrderStatus.class);

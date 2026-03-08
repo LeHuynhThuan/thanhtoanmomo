@@ -37,7 +37,8 @@ public class SecurityConfig {
                                 "/books/list", "/books/search",
                                 "/css/**", "/js/**", "/images/**", "/static/**",
                                 "/auth/register", "/auth/login",
-                                "/cart/**").permitAll()
+                                "/cart/**",
+                                "/momo/**").permitAll()
                         .requestMatchers("/books/edit/**", "/books/delete/**").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/checkout/**").hasRole("USER")

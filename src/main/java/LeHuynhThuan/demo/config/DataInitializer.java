@@ -51,6 +51,7 @@ public class DataInitializer {
                     book1.setImage("https://via.placeholder.com/200x280?text=Java");
                     book1.setDescription("Sach hoc lap trinh Java co ban den nang cao");
                     book1.setCategoryId(cat1.getId());
+                    book1.setStock(100);
                     bookRepository.save(book1);
 
                     Book book2 = new Book();
@@ -60,6 +61,7 @@ public class DataInitializer {
                     book2.setImage("https://via.placeholder.com/200x280?text=Spring+Boot");
                     book2.setDescription("Huong dan xay dung ung dung voi Spring Boot");
                     book2.setCategoryId(cat1.getId());
+                    book2.setStock(100);
                     bookRepository.save(book2);
 
                     Book book3 = new Book();
@@ -69,6 +71,7 @@ public class DataInitializer {
                     book3.setImage("https://via.placeholder.com/200x280?text=Python");
                     book3.setDescription("Nhap mon lap trinh Python");
                     book3.setCategoryId(cat1.getId());
+                    book3.setStock(100);
                     bookRepository.save(book3);
 
                     Book book4 = new Book();
@@ -78,6 +81,7 @@ public class DataInitializer {
                     book4.setImage("https://via.placeholder.com/200x280?text=Kinh+Te");
                     book4.setDescription("Giao trinh kinh te hoc vi mo");
                     book4.setCategoryId(cat2.getId());
+                    book4.setStock(100);
                     bookRepository.save(book4);
 
                     Book book5 = new Book();
@@ -87,6 +91,7 @@ public class DataInitializer {
                     book5.setImage("https://via.placeholder.com/200x280?text=Marketing");
                     book5.setDescription("Nguyen ly Marketing hien dai");
                     book5.setCategoryId(cat2.getId());
+                    book5.setStock(100);
                     bookRepository.save(book5);
 
                     Book book6 = new Book();
@@ -96,6 +101,7 @@ public class DataInitializer {
                     book6.setImage("https://via.placeholder.com/200x280?text=Truyen+Kieu");
                     book6.setDescription("Tac pham van hoc tien Viet Nam");
                     book6.setCategoryId(cat3.getId());
+                    book6.setStock(100);
                     bookRepository.save(book6);
 
                     Book book7 = new Book();
@@ -105,6 +111,7 @@ public class DataInitializer {
                     book7.setImage("https://via.placeholder.com/200x280?text=So+Do");
                     book7.setDescription("Tieu thuyet trao phung noi tieng");
                     book7.setCategoryId(cat3.getId());
+                    book7.setStock(100);
                     bookRepository.save(book7);
 
                     Book book8 = new Book();
@@ -114,6 +121,7 @@ public class DataInitializer {
                     book8.setImage("https://via.placeholder.com/200x280?text=Vat+Ly");
                     book8.setDescription("Giao trinh vat ly dai cuong");
                     book8.setCategoryId(cat4.getId());
+                    book8.setStock(100);
                     bookRepository.save(book8);
 
                     Book book9 = new Book();
@@ -123,6 +131,7 @@ public class DataInitializer {
                     book9.setImage("https://via.placeholder.com/200x280?text=TOEIC");
                     book9.setDescription("Luyen thi TOEIC dat diem cao");
                     book9.setCategoryId(cat5.getId());
+                    book9.setStock(100);
                     bookRepository.save(book9);
 
                     Book book10 = new Book();
@@ -132,6 +141,7 @@ public class DataInitializer {
                     book10.setImage("https://via.placeholder.com/200x280?text=IELTS");
                     book10.setDescription("Chinh phuc IELTS Academic");
                     book10.setCategoryId(cat5.getId());
+                    book10.setStock(100);
                     bookRepository.save(book10);
                 }
             }

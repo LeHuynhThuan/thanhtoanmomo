@@ -32,7 +32,7 @@
                             <code th:text="${#strings.abbreviate(order.id, 8)}">ID</code>
                         </td>
                         <td th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}">Ngày</td>
-                        <td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0 VND</td>
+                        <td th:text="${#numbers.formatDecimal(order.displayFinalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0 VND</td>
                         <td>
                             <span th:class="'badge status-badge status-' + ${order.status.name().toLowerCase()}"
                                   th:text="${order.status.displayName}">Trạng thái</span>

@@ -24,9 +24,13 @@
                     <p class="mb-1"><strong>Trạng thái:</strong>
                         <span th:class="'badge status-badge status-' + ${order.status.name().toLowerCase()}"
                               th:text="${order.status.displayName}">Trạng thái</span></p>
+                    <p class="mb-1" th:if="${order.voucherCode != null && order.discountAmount > 0}">
+                        <strong>Voucher:</strong> <code th:text="${order.voucherCode}">CODE</code>
+                        <span class="text-success">(-<span th:text="${#numbers.formatDecimal(order.discountAmount, 0, 'COMMA', 0, 'POINT')}">0</span> VND)</span>
+                    </p>
                     <p class="mb-0"><strong>Tổng tiền:</strong>
                         <span class="text-danger fw-bold"
-                              th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0 VND</span>
+                              th:text="${#numbers.formatDecimal(order.displayFinalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0 VND</span>
                     </p>
                 </div>
             </div>
@@ -59,8 +63,8 @@
                             <tr th:each="item : ${order.items}">
                                 <td th:text="${item.bookTitle}">Tên sách</td>
                                 <td th:text="${item.quantity}">1</td>
-                                <td th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
-                                <td th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
+                                <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
+                                <td th:text="${#numbers.formatDecimal(item.subTotal, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
                             </tr>
                             </tbody>
                         </table>

@@ -176,6 +176,11 @@
                                 <i class="bi bi-speedometer2"></i> Dashboard Admin
                             </a>
                         </li>
+                        <li sec:authorize="hasRole('ADMIN')">
+                            <a class="dropdown-item" th:href="@{/admin/orders}">
+                                <i class="bi bi-receipt-cutout"></i> Lịch sử Bán Hàng
+                            </a>
+                        </li>
                         <li sec:authorize="hasRole('USER')">
                             <a class="dropdown-item" th:href="@{/orders}">
                                 <i class="bi bi-receipt"></i> Đơn hàng của tôi

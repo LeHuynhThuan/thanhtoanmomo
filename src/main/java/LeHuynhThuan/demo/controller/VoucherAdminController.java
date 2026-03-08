@@ -40,6 +40,12 @@ public class VoucherAdminController {
                 .orElse("redirect:/admin/vouchers");
     }
 
+    // Trường hợp truy cập nhầm /admin/vouchers/edit/ (không có id) thì quay lại danh sách
+    @GetMapping("/edit")
+    public String editVoucherWithoutId() {
+        return "redirect:/admin/vouchers";
+    }
+
     @PostMapping("/save")
     public String saveVoucher(@Valid @ModelAttribute("voucher") Voucher voucher,
                               BindingResult result,

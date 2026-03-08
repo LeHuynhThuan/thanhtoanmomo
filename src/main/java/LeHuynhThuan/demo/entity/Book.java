@@ -1,6 +1,7 @@
 package LeHuynhThuan.demo.entity;
 
 import LeHuynhThuan.demo.validator.ValidCategoryId;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -45,5 +46,8 @@ public class Book {
 
     @Transient
     private Category category;
+
+    @Min(value = 0, message = "Số lượng phải lớn hơn hoặc bằng 0")
+    private int stock;
 }
 

@@ -310,4 +310,10 @@ public class AdminController {
                 })
                 .orElse("redirect:/admin/orders");
     }
+
+    @PostMapping("/orders/{id}/delete")
+    public String deleteOrder(@PathVariable String id) {
+        invoiceService.getInvoiceById(id).ifPresent(inv -> invoiceService.deleteInvoice(id));
+        return "redirect:/admin/orders";
+    }
 }

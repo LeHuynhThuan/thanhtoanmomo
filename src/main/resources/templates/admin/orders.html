@@ -20,6 +20,7 @@
             <a th:href="@{/admin/books}" class="btn btn-sm btn-outline-primary">Quản lý Sách</a>
             <a th:href="@{/admin/categories}" class="btn btn-sm btn-outline-primary">Quản lý Thể Loại</a>
             <a th:href="@{/admin/orders}" class="btn btn-sm btn-primary active">Lịch sử Bán Hàng</a>
+            <a th:href="@{/admin/vouchers}" class="btn btn-sm btn-outline-primary">Quản lý Voucher</a>
         </div>
     </div>
 </div>
@@ -59,7 +60,11 @@
                                 <small class="text-muted" th:text="${order.customerEmail}">email</small>
                             </td>
                             <td th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}">Ngày</td>
-                            <td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'DEFAULT', 0, 'DEFAULT')} + ' VND'">0 VND</td>
+                            <td>
+                                <span th:text="${#numbers.formatDecimal(order.displayFinalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0 VND</span>
+                                <span th:if="${order.voucherCode != null && !order.voucherCode.isEmpty()}" 
+                                      class="badge bg-success ms-1" title="Đã áp dụng voucher">Voucher</span>
+                            </td>
                             <td>
                                 <span th:class="'badge status-badge status-' + ${order.status.name().toLowerCase()}" 
                                       th:text="${order.status.displayName}">
@@ -70,6 +75,13 @@
                                 <a th:href="@{/admin/orders/{id}(id=${order.id})}" class="btn btn-sm btn-info" title="Xem chi tiết đơn hàng">
                                     <i class="bi bi-eye"></i> Chi Tiết
                                 </a>
+                                <form th:action="@{/admin/orders/{id}/delete(id=${order.id})}" method="post" class="d-inline ms-1"
+                                      onsubmit="return confirm('Bạn có chắc muốn xóa đơn hàng này?');">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Xóa đơn hàng">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(orders)}">

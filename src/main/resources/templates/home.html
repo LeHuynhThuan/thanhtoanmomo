@@ -86,10 +86,17 @@
                             </div>
                         </div>
                         <div class="card-body d-flex flex-column">
-                            <h6 class="text-muted text-uppercase fw-bold mb-2" th:text="${book.category?.name} != null ? ${book.category?.name} : 'Khác'">Danh Mục</h6>
+                            <h6 class="text-muted text-uppercase fw-bold mb-2"
+                                th:text="${book.category?.name} != null ? ${book.category?.name} : 'Khác'">Danh Mục</h6>
                             <h5 class="card-title fw-bold flex-grow-1" th:text="${book.title}">Sách</h5>
-                            <p class="text-muted mb-3" th:text="${book.author}">Tác giả</p>
-                            <h6 class="text-accent fw-bold mb-3" th:text="${#numbers.formatDecimal(book.price, 0, 'DEFAULT', 0, 'DEFAULT')} + ' VND'">Giá</h6>
+                            <p class="text-muted mb-1" th:text="${book.author}">Tác giả</p>
+                            <p class="text-muted small mb-2">
+                                <i class="bi bi-box-seam"></i>
+                                <span th:if="${book.stock > 0}" th:text="'Còn ' + ${book.stock} + ' cuốn'">Còn 0 cuốn</span>
+                                <span th:if="${book.stock <= 0}" class="text-danger">Hết hàng</span>
+                            </p>
+                            <h6 class="text-accent fw-bold mb-3"
+                                th:text="${#numbers.formatDecimal(book.price, 0, 'DEFAULT', 0, 'DEFAULT')} + ' VND'">Giá</h6>
                             <a th:href="@{/books/{id}(id=${book.id})}" class="btn btn-sm btn-primary rounded-2 w-100">Chi Tiết</a>
                         </div>
                     </div>
